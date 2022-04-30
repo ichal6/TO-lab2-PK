@@ -16,7 +16,7 @@ public class FireNotification extends Notification{
         @Override
         public void execute() {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                System.out.println("Zgłoszenie numer: " + this.ID + "\nCzas zgłoszenia: " + formatter.format(this.date));
+                System.out.println("Zgłoszenie typu PZ numer: " + this.ID + "\nCzas zgłoszenia: " + formatter.format(this.date));
 
                 this.stateNotification = new BeforeNotification();
                 this.stateNotification.execute();
