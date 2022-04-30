@@ -1,6 +1,6 @@
 package Cars;
 
-public class Car {
+public class Car implements CarSubscriber{
     private boolean isFree;
 
     public Car() {
@@ -15,4 +15,8 @@ public class Car {
         return isFree;
     }
 
+    @Override
+    public void update(boolean isFree) {
+        this.isFree = isFree;
+    }
 }

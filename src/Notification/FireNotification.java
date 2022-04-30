@@ -1,11 +1,9 @@
 package Notification;
 
-import Cars.Car;
 import Coordinates.Coordinates;
 import States.DuringNotification;
 
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Random;
 
 public class FireNotification extends Notification{
@@ -17,15 +15,15 @@ public class FireNotification extends Notification{
         @Override
         public void execute() {
                 SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                Random random = new Random();
+                Random random = new Random(System.currentTimeMillis());
 
                 this.stateNotification = new DuringNotification();
-                System.out.println("Zgłoszenie numer: " + Notification.number + "\nDojazd na miejsce: " + formatter.format(this.date));
+                System.out.println("Zgłoszenie numer: " + this.ID + "\nCzas zgłoszenia: " + formatter.format(this.date));
 
 
                 int travelTime =  random.nextInt(4);
 
-                boolean isFalseNotification =  random.nextInt(0, 100) <= 10;
+                boolean isFalseNotification =  random.nextInt(0, 100) <= 5;
 
                 System.out.println("Dojazd na miejsce zdarzena trwał: " + travelTime);
 
@@ -41,6 +39,9 @@ public class FireNotification extends Notification{
 
                 System.out.print("Powrót do bazy po: ");
                 int returnTime = random.nextInt(4);
-                System.out.println(returnTime);
+                System.out.println(returnTime + "\n");
+
+                notifyCars();
         }
+
 }

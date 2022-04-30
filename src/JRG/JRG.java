@@ -38,9 +38,9 @@ public class JRG{
             }
 
             if(car.isFree()){
-                car.setFree(false);
+                car.update(false);
                 notification.decreaseNeededCars();
-                notification.reservedCars.add(car);
+                notification.addCar(car);
             }
         }
 

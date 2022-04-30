@@ -9,7 +9,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public abstract class Notification {
-    protected static int number = 0;
+    protected static int counter = 1;
+    protected int ID;
     protected Date date;
     protected Coordinates coordinates;
     protected StateNotification stateNotification;
@@ -20,7 +21,7 @@ public abstract class Notification {
         this.coordinates = coordinates;
         this.date = new Date(System.currentTimeMillis());
         this.reservedCars = new LinkedList<>();
-        number += 1;
+        this.ID = counter++;
     }
 
     public Coordinates getCoordinates() {
@@ -35,5 +36,19 @@ public abstract class Notification {
 
     public void decreaseNeededCars() {
         this.numberOfCars -= 1;
+    }
+
+    public void addCar(Car car){
+        this.reservedCars.add(car);
+    }
+
+    public void detachCar(Car car){
+        this.reservedCars.remove(car);
+    }
+
+    public void notifyCars(){
+        for( Car car: reservedCars){
+            car.update(true);
+        }
     }
 }
