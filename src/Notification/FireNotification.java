@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Random;
 
 public class FireNotification extends Notification{
-        public FireNotification(String name, Coordinates coordinates) {
-                super(name, coordinates);
+        public FireNotification(Coordinates coordinates) {
+                super(coordinates);
                 this.numberOfCars = 3;
         }
 
@@ -20,12 +20,12 @@ public class FireNotification extends Notification{
                 Random random = new Random();
 
                 this.stateNotification = new DuringNotification();
-                System.out.println("Zgłoszenie numer: " + formatter.format(this.date) + "Dojazd na miejsce");
+                System.out.println("Zgłoszenie numer: " + Notification.number + "\nDojazd na miejsce: " + formatter.format(this.date));
 
 
                 int travelTime =  random.nextInt(4);
 
-                boolean isFalseNotification =  random.nextInt(0, 100) <= 5;
+                boolean isFalseNotification =  random.nextInt(0, 100) <= 10;
 
                 System.out.println("Dojazd na miejsce zdarzena trwał: " + travelTime);
 
@@ -39,8 +39,8 @@ public class FireNotification extends Notification{
                         System.out.println("Operacja zakończona po: " + operationTime);
                 }
 
-                System.out.println("Powrót do bazy");
-                random.nextInt(4);
-
+                System.out.print("Powrót do bazy po: ");
+                int returnTime = random.nextInt(4);
+                System.out.println(returnTime);
         }
 }

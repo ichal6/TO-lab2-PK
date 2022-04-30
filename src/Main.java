@@ -1,3 +1,4 @@
+import Cars.Car;
 import Coordinates.Coordinates;
 import JRG.JRG;
 import JRG.JRGCollection;
@@ -6,11 +7,12 @@ import SKKM.SKKM;
 
 public class Main {
     public static void main(String[] args) {
-        JRGCollection jrgCollection = new JRGCollection(10);
-//        JRG JRGSkawina = new JRG();
+        JRGCollection jrgCollection = new JRGCollection(1);
+        JRG JRGSkawina = new JRG("JRG Skawina", new Coordinates(49.97224978359688, 19.79655221139836));
+        jrgCollection.addItem(JRGSkawina);
 
         SKKM skkm = new SKKM(jrgCollection);
-        Notification fireNotification = new FireNotification("First fire notation", new Coordinates(50.0, 20.0));
+        Notification fireNotification = new FireNotification(new Coordinates(50.0, 20.0));
         skkm.receiveNotification(fireNotification);
     }
 }
