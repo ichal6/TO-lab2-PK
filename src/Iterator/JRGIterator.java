@@ -26,7 +26,7 @@ public class JRGIterator implements Iterator{
         int index = 0;
         for(JRG jrg: array){
             if (jrg == null){
-                throw new NoSuchElementException("You have to add more than one JRG unit!");
+                break;
             }
             var result = jrg.compareCoordinates(this.coordinates);
             if( !JRGLocations.containsKey(result)){
