@@ -40,7 +40,7 @@ public class SKKM {
             boolean isFullyAccepted = unit.update(notification);
             if(isFullyAccepted){
                 notification.execute();
-                break;
+                return;
             }
         }
 
