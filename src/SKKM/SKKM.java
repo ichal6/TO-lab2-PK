@@ -2,7 +2,7 @@ package SKKM;
 
 import Coordinates.Coordinates;
 import Iterator.*;
-import JRG.JRG;
+import JRG.*;
 import Notification.Notification;
 
 import java.util.LinkedList;
@@ -10,13 +10,13 @@ import java.util.List;
 import java.util.Queue;
 
 public class SKKM {
-//    private List<JRG> JRGunits;
+    private JRGCollection JRGunits;
     private List<Notification> notificationsList;
     private Iterator iterator;
     private Queue<Notification> waitingNotifications;
 
-    public SKKM() {
-//        this.JRGunits = new LinkedList<>();
+    public SKKM(JRGCollection jrgCollection) {
+        this.JRGunits = jrgCollection;
         this.notificationsList = new LinkedList<>();
         this.waitingNotifications = new LinkedList<>();
     }
@@ -34,7 +34,7 @@ public class SKKM {
     }
 
     public void receiveNotification(Notification notification) {
-        this.iterator = createIterator(notification.getCoordinates());
+        this.iterator = JRGunits.createIterator(notification.getCoordinates());
         while(iterator.hasMore()){
             JRG unit = iterator.getNext();
             boolean isFullyAccepted = unit.update(notification);
@@ -45,10 +45,6 @@ public class SKKM {
         }
 
         waitingNotifications.add(notification);
-    }
-
-    private Iterator createIterator(Coordinates coordinates){
-        return new JRGIterator(coordinates);
     }
 
 
