@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class Notification {
+public abstract class Notification implements Runnable{
     protected static int counter = 1;
     protected int ID;
     protected Date date;
@@ -16,6 +16,7 @@ public abstract class Notification {
     protected StateNotification stateNotification;
     protected int numberOfCars;
     public List<Car> reservedCars;
+    protected Thread thread;
 
     public Notification( Coordinates coordinates){
         this.coordinates = coordinates;
@@ -28,7 +29,12 @@ public abstract class Notification {
         return coordinates;
     }
 
-    public abstract void execute();
+    public void execute(){
+        if(this.thread == null){
+            this.thread = new Thread(this, String.valueOf(ID));
+            thread.start();
+        }
+    }
 
     public int getNeededCars() {
         return this.numberOfCars;

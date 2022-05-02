@@ -1,16 +1,17 @@
 package States;
 
-import java.text.SimpleDateFormat;
+import Logs.ConsoleLog;
+
 import java.util.Random;
 
 public class BeforeNotification extends StateNotification{
 
     @Override
-    public void execute() {
+    public void execute(int ID) {
         Random random = new Random(System.currentTimeMillis());
 
         int travelTime =  random.nextInt(4);
 
-        System.out.println("Dojazd na miejsce zdarzena trwał: " + travelTime);
+        ConsoleLog.log(ID, "Dojazd na miejsce zdarzena trwał: " + travelTime);
     }
 }

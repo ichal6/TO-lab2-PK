@@ -1,20 +1,22 @@
 package States;
 
+import Logs.ConsoleLog;
+
 import java.util.Random;
 
 public class DuringNotification extends StateNotification{
     @Override
-    public void execute() {
+    public void execute(int ID) {
         Random random = new Random(System.currentTimeMillis());
         boolean isFalseNotification =  random.nextInt(0, 100) <= 5;
         if(isFalseNotification){
-            System.out.println("Zdarzenie fałszywe");
+            ConsoleLog.log(ID, "Zdarzenie fałszywe");
         } else{
-            System.out.println("Zdarzenie prawdziwe");
+            ConsoleLog.log(ID,"Zdarzenie prawdziwe");
 
-            System.out.println("Trwa operacja ratownicza");
+            ConsoleLog.log(ID,"Trwa operacja ratownicza");
             int operationTime =  random.nextInt(5, 26);
-            System.out.println("Operacja zakończona po: " + operationTime);
+            ConsoleLog.log(ID,"Operacja zakończona po: " + operationTime);
         }
     }
 }
