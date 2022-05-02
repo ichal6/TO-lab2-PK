@@ -16,7 +16,13 @@ public class DuringNotification extends StateNotification{
 
             ConsoleLog.log(ID,"Trwa operacja ratownicza");
             int operationTime =  random.nextInt(5, 26);
-            ConsoleLog.log(ID,"Operacja zakończona po: " + operationTime);
+            ConsoleLog.log(ID,"Operacja zakończona po: ", operationTime);
+
+            try {
+                Thread.sleep(operationTime*1000);
+            } catch (InterruptedException e) {
+                ConsoleLog.log(ID, "Błąd zgłoszenia");
+            }
         }
     }
 }

@@ -10,6 +10,11 @@ public class AfterNotification extends  StateNotification{
     public void execute(int ID) {
         Random random = new Random(System.currentTimeMillis());
         int returnTime = random.nextInt(4);
-        ConsoleLog.log(ID, "Powrót do bazy po: " + returnTime);
+        try {
+            Thread.sleep(returnTime*1000);
+        } catch (InterruptedException e) {
+            ConsoleLog.log(ID, "Błąd zgłoszenia");
+        }
+        ConsoleLog.log(ID, "Powrót do bazy po: ", returnTime);
     }
 }
