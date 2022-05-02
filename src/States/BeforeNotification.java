@@ -8,6 +8,8 @@ public class BeforeNotification extends StateNotification{
 
     @Override
     public void execute(int ID) {
+        ConsoleLog.log(ID, "Wyjazd do zgłoszenia");
+
         Random random = new Random(System.currentTimeMillis());
 
         int travelTime =  random.nextInt(4);
