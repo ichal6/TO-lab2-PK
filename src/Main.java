@@ -61,13 +61,10 @@ public class Main {
             }
         }
 
-//        Notification fireNotification = new FireNotification(new Coordinates(50.0, 20.0));
-//        Notification fireNotification2 = new FireNotification(new Coordinates(50.0, 20.0));
-//
-//        skkm.receiveNotification(fireNotification);
-//        skkm.receiveNotification(fireNotification2);
-//        Notification localNotification = new LocalDangerNotification(new Coordinates(50.0, 20.0));
-//        skkm.receiveNotification(localNotification);
+        while(skkm.isWaitingNotifications()){
+            skkm.executeWaitingNotifications();
+        }
+
     }
 
     private static void addJRGs(JRGCollection jrgCollection){

@@ -23,9 +23,16 @@ public class JRGCollection implements Collection{
             index += 1;
         }
     }
+    @Override
+    public void notifyAllUnits(){
+        for(int i = 0; i < JRGArray.length; i++){
+            JRGArray[i].reset();
+        }
+    }
 
     @Override
     public Iterator createIterator(Coordinates coordinates) {
         return new JRGIterator(coordinates, this.JRGArray);
     }
+
 }

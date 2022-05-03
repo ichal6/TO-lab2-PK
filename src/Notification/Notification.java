@@ -2,6 +2,9 @@ package Notification;
 
 import Cars.Car;
 import Coordinates.Coordinates;
+import States.AfterNotification;
+import States.BeforeNotification;
+import States.DuringNotification;
 import States.StateNotification;
 
 import java.util.Date;
@@ -15,7 +18,7 @@ public abstract class Notification implements Runnable{
     protected Coordinates coordinates;
     protected StateNotification stateNotification;
     protected int numberOfCars;
-    public List<Car> reservedCars;
+    protected List<Car> reservedCars;
     protected Thread thread;
 
     public Notification( Coordinates coordinates){
@@ -56,5 +59,22 @@ public abstract class Notification implements Runnable{
         for( Car car: reservedCars){
             car.update(true);
         }
+    }
+
+    public boolean containCar(Car car){
+        return this.reservedCars.contains(car);
+    }
+
+    protected void runNotification(){
+        this.stateNotification = new BeforeNotification();
+        this.stateNotification.execute(this.ID);
+
+        this.stateNotification = new DuringNotification();
+        this.stateNotification.execute(this.ID);
+
+        this.stateNotification = new AfterNotification();
+        this.stateNotification.execute(this.ID);
+
+        notifyCars();
     }
 }

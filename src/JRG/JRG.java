@@ -13,6 +13,7 @@ public class JRG{
     private String name;
     private List<Car> carsList;
     private SKKM skkmCenter;
+    private Notification notification;
     private Coordinates coordinates;
 
     public JRG(String name,  Coordinates coordinates) {
@@ -31,23 +32,33 @@ public class JRG{
     }
 
     public boolean update(Notification notification) {
-//        notification.execute(carsList);
+        this.notification = notification;
         for (Car car: carsList){
-            if(notification.getNeededCars() == 0){
-                return true;
-            }
-
             if(car.isFree()){
                 car.update(false);
                 notification.decreaseNeededCars();
                 notification.addCar(car);
+            }
+
+            if(notification.getNeededCars() == 0){
+                return true;
             }
         }
 
         return false;
     }
 
+    public void reset(){
+        for(Car car: carsList){
+            if(notification.containCar(car)){
+                notification.detachCar(car);
+                car.update(true);
+            }
+        }
+    }
+
     public double compareCoordinates(Coordinates otherCoordinates){
         return this.coordinates.compareCoordinates(otherCoordinates);
     }
+
 }
