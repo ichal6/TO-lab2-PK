@@ -1,8 +1,12 @@
 import Coordinates.Coordinates;
-import JRG.JRG;
-import JRG.JRGCollection;
+import JRG.*;
+import Logs.ConsoleLog;
 import Notification.*;
 import SKKM.SKKM;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+import java.util.SplittableRandom;
 
 public class Main {
     public static void main(String[] args) {
@@ -11,13 +15,59 @@ public class Main {
         addJRGs(jrgCollection);
 
         SKKM skkm = new SKKM(jrgCollection);
-        Notification fireNotification = new FireNotification(new Coordinates(50.0, 20.0));
-        Notification fireNotification2 = new FireNotification(new Coordinates(50.0, 20.0));
 
-        skkm.receiveNotification(fireNotification);
-        skkm.receiveNotification(fireNotification2);
-        Notification localNotification = new LocalDangerNotification(new Coordinates(50.0, 20.0));
-        skkm.receiveNotification(localNotification);
+        double maxLatitudeN = 50.154564013341735, minLatitudeN = 49.95855025648944, maxLongitudeE = 20.02470275868904,
+                minLongitudeE = 19.688292482742394; // both max value is incremented in the last position for next random method
+
+        Scanner scanner = new Scanner(System.in);
+        int count;
+
+        try{
+            ConsoleLog.log("Proszę wprowadzić ilość zgłoszeń:");
+            count = scanner.nextInt();
+        } catch (InputMismatchException ex){
+            ConsoleLog.log("Wprowadzono błędne dane. Wybrano 10 zgłoszeń");
+            count = 10;
+        }
+
+        while(count > 0){
+
+            SplittableRandom splittableRandom = new SplittableRandom();
+
+            double latitudeN = splittableRandom.nextDouble(minLatitudeN, maxLatitudeN);
+            double longitudeE = splittableRandom.nextDouble(minLongitudeE, maxLongitudeE);
+
+
+            Coordinates incidentCoordinates = new Coordinates(latitudeN, longitudeE);
+
+            boolean isFire = splittableRandom.nextInt(100) < 30;
+            
+            Notification newNotification;
+            
+            if(isFire){
+                newNotification = new FireNotification(incidentCoordinates);
+            } else{
+                newNotification = new LocalDangerNotification(incidentCoordinates);
+            }
+
+            skkm.receiveNotification(newNotification);
+
+            count--;
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                ConsoleLog.log("Problem with thread");
+            }
+        }
+
+//        Notification fireNotification = new FireNotification(new Coordinates(50.0, 20.0));
+//        Notification fireNotification2 = new FireNotification(new Coordinates(50.0, 20.0));
+//
+//        skkm.receiveNotification(fireNotification);
+//        skkm.receiveNotification(fireNotification2);
+//        Notification localNotification = new LocalDangerNotification(new Coordinates(50.0, 20.0));
+//        skkm.receiveNotification(localNotification);
     }
 
     private static void addJRGs(JRGCollection jrgCollection){
