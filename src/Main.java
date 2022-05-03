@@ -9,16 +9,19 @@ import java.util.Scanner;
 import java.util.SplittableRandom;
 
 public class Main {
-    public static void main(String[] args) {
+    double maxLatitudeN = 50.154564013341735, minLatitudeN = 49.95855025648944, maxLongitudeE = 20.02470275868904,
+            minLongitudeE = 19.688292482742394; // both max value is incremented in the last position for next random method
+
+    SKKM skkm;
+    public Main(){
         JRGCollection jrgCollection = new JRGCollection(10);
 
         addJRGs(jrgCollection);
 
-        SKKM skkm = new SKKM(jrgCollection);
+        this.skkm = new SKKM(jrgCollection);
+    }
 
-        double maxLatitudeN = 50.154564013341735, minLatitudeN = 49.95855025648944, maxLongitudeE = 20.02470275868904,
-                minLongitudeE = 19.688292482742394; // both max value is incremented in the last position for next random method
-
+    private int getSizeOfNotifications(){
         Scanner scanner = new Scanner(System.in);
         int count;
 
@@ -30,6 +33,10 @@ public class Main {
             count = 10;
         }
 
+        return count;
+    }
+
+    public void run(int count){
         while(count > 0){
 
             SplittableRandom splittableRandom = new SplittableRandom();
@@ -41,9 +48,9 @@ public class Main {
             Coordinates incidentCoordinates = new Coordinates(latitudeN, longitudeE);
 
             boolean isFire = splittableRandom.nextInt(100) < 30;
-            
+
             Notification newNotification;
-            
+
             if(isFire){
                 newNotification = new FireNotification(incidentCoordinates);
             } else{
@@ -64,10 +71,16 @@ public class Main {
         while(skkm.isWaitingNotifications()){
             skkm.executeWaitingNotifications();
         }
+    }
+
+    public static void main(String[] args) {
+        Main main = new Main();
+        int sizeOfNotifications = main.getSizeOfNotifications();
+        main.run(sizeOfNotifications);
 
     }
 
-    private static void addJRGs(JRGCollection jrgCollection){
+    private void addJRGs(JRGCollection jrgCollection){
         JRG JRGSkawina = new JRG("JRG Skawina", new Coordinates(49.97224978359688, 19.79655221139836));
         JRG JRGSchool = new JRG("JRG Szkoły aspirantów", new Coordinates(50.077513569634725, 20.03378189976448));
         JRG LSPAirport = new JRG("LSP Lotnisko w Balicach", new Coordinates(50.07886617770602, 19.79443359213229));
